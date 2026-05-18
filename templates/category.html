@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}{{ category.name }} | {{ site_name }}{% endblock %}
+{% block content %}
+<section class="py-10 sm:py-14">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <h1 class="font-display text-5xl">{{ category.name }} Collection</h1>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {% for product in products %}
+      {% include "_product_card.html" %}
+      {% else %}
+      <p class="text-white/55">No products have been added to this collection yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

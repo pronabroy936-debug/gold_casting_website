@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+{% block title %}{{ site_name }} | Luxury Jewellery{% endblock %}
+{% block content %}
+<section class="relative min-h-[560px] overflow-hidden sm:min-h-[640px] lg:min-h-[760px]">
+  {% if banners %}
+    {% set hero = banners[0] %}
+    <img class="absolute inset-0 h-full w-full object-cover" src="{{ url_for('static', filename='uploads/banners/' ~ hero.image) }}" alt="{{ hero.title }}">
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/20"></div>
+    <div class="relative mx-auto flex min-h-[560px] max-w-7xl items-end px-4 pb-12 sm:min-h-[640px] sm:px-6 lg:min-h-[760px] lg:items-center lg:px-8 lg:pb-0">
+      <div class="max-w-2xl">
+        <span class="text-xs font-bold uppercase tracking-[0.24em] text-goldSoft">Handcrafted Collection</span>
+        <h1 class="mt-3 font-display text-5xl leading-none sm:text-6xl lg:text-7xl">{{ hero.title }}</h1>
+        <p class="mt-5 max-w-xl text-base leading-8 text-white/75">{{ hero.subtitle }}</p>
+        <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+          <a class="inline-flex min-h-12 items-center justify-center rounded-md bg-gold px-6 font-semibold text-black transition hover:bg-goldSoft" href="{{ url_for('products') }}">Explore Collection</a>
+          <a class="inline-flex min-h-12 items-center justify-center rounded-md border border-white/20 px-6 font-semibold transition hover:border-gold/50 hover:text-goldSoft" href="{{ url_for('products', metal='Gold') }}">View Gold Designs</a>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <img class="absolute inset-0 h-full w-full object-cover" src="{{ url_for('static', filename='images/hero-jewellery.png') }}" alt="Luxury jewellery">
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/20"></div>
+    <div class="relative mx-auto flex min-h-[560px] max-w-7xl items-end px-4 pb-12 sm:min-h-[640px] sm:px-6 lg:min-h-[760px] lg:items-center lg:px-8 lg:pb-0">
+      <div class="max-w-2xl">
+        <span class="text-xs font-bold uppercase tracking-[0.24em] text-goldSoft">Handcrafted Collection</span>
+        <h1 class="mt-3 font-display text-5xl leading-none sm:text-6xl lg:text-7xl">Gold Casting & Jewellery</h1>
+        <p class="mt-5 max-w-xl text-base leading-8 text-white/75">Timeless designs in gold and silver, crafted for celebrations and daily elegance.</p>
+        <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+          <a class="inline-flex min-h-12 items-center justify-center rounded-md bg-gold px-6 font-semibold text-black transition hover:bg-goldSoft" href="{{ url_for('products') }}">Explore Collection</a>
+          <a class="inline-flex min-h-12 items-center justify-center rounded-md border border-white/20 px-6 font-semibold transition hover:border-gold/50 hover:text-goldSoft" href="{{ url_for('products', metal='Gold') }}">View Gold Designs</a>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+<section class="border-y border-white/10 bg-white/[0.02]">
+  <div class="mx-auto grid max-w-7xl gap-px bg-white/10 px-4 sm:px-6 md:grid-cols-3 lg:px-8">
+    <div class="bg-ink px-5 py-6">
+      <strong class="block text-goldSoft">Hallmarked Craft</strong>
+      <span class="mt-1 block text-sm text-white/55">Purity-focused gold and silver finishing</span>
+    </div>
+    <div class="bg-ink px-5 py-6">
+      <strong class="block text-goldSoft">Custom Orders</strong>
+      <span class="mt-1 block text-sm text-white/55">Made-to-order designs for every occasion</span>
+    </div>
+    <div class="bg-ink px-5 py-6">
+      <strong class="block text-goldSoft">Local Showcase</strong>
+      <span class="mt-1 block text-sm text-white/55">Fast catalogue updates from the admin panel</span>
+    </div>
+  </div>
+</section>
+
+{% macro collection_section(title, items, metal) %}
+<section class="py-14 sm:py-16">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-6 flex items-end justify-between gap-4">
+      <h2 class="font-display text-4xl">{{ title }}</h2>
+      <a class="font-semibold text-goldSoft" href="{{ url_for('products', metal=metal) }}">View all</a>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {% for product in items %}
+      {% include "_product_card.html" %}
+      {% else %}
+      <p class="text-white/55">No products yet. Add items from the admin panel.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endmacro %}
+
+<section class="py-14 sm:py-16">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-6 flex items-end justify-between gap-4">
+      <h2 class="font-display text-4xl">Featured Products</h2>
+      <a class="font-semibold text-goldSoft" href="{{ url_for('products') }}">Browse all</a>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {% for product in featured_products %}
+      {% include "_product_card.html" %}
+      {% else %}
+      <p class="text-white/55">Your featured products will appear here after the first upload.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="py-4 sm:py-8">
+  <div class="mx-auto grid max-w-7xl gap-4 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+    <a href="{{ url_for('products', metal='Gold') }}" class="rounded-lg border border-white/10 bg-[linear-gradient(135deg,rgba(212,175,55,.28),rgba(17,17,17,.92))] p-6 transition hover:-translate-y-1 hover:border-gold/50 sm:p-8">
+      <span class="text-xs font-bold uppercase tracking-[0.22em] text-goldSoft">Signature Metal</span>
+      <h2 class="mt-2 font-display text-5xl">Gold</h2>
+      <p class="mt-3 max-w-md text-white/65">Wedding sets, chains, bracelets, rings, and refined daily wear.</p>
+    </a>
+    <a href="{{ url_for('products', metal='Silver') }}" class="rounded-lg border border-white/10 bg-[linear-gradient(135deg,rgba(192,192,192,.22),rgba(17,17,17,.92))] p-6 transition hover:-translate-y-1 hover:border-gold/50 sm:p-8">
+      <span class="text-xs font-bold uppercase tracking-[0.22em] text-goldSoft">Everyday Grace</span>
+      <h2 class="mt-2 font-display text-5xl">Silver</h2>
+      <p class="mt-3 max-w-md text-white/65">Payel, rings, bracelets, and elegant gifting pieces.</p>
+    </a>
+  </div>
+</section>
+
+{{ collection_section("Gold Collection", gold_products, "Gold") }}
+{{ collection_section("Silver Collection", silver_products, "Silver") }}
+{% endblock %}

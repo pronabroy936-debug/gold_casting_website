@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block title %}Products | {{ site_name }}{% endblock %}
+{% block content %}
+<section class="py-10 sm:py-14">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-6">
+      <span class="text-xs font-bold uppercase tracking-[0.22em] text-goldSoft">Catalogue</span>
+      <h1 class="mt-2 font-display text-5xl">Jewellery Collection</h1>
+    </div>
+
+    <form class="grid gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-4 md:grid-cols-[minmax(220px,1fr)_180px_220px_auto]" method="get">
+      <input class="field" type="search" name="q" value="{{ search }}" placeholder="Search by product name">
+      <select class="field" name="metal">
+        <option value="">All metals</option>
+        <option value="Gold" {% if selected_metal == "Gold" %}selected{% endif %}>Gold</option>
+        <option value="Silver" {% if selected_metal == "Silver" %}selected{% endif %}>Silver</option>
+      </select>
+      <select class="field" name="category">
+        <option value="">All categories</option>
+        {% for category in categories %}
+        <option value="{{ category.id }}" {% if selected_category == category.id %}selected{% endif %}>
+          {% if category.parent %}{{ category.parent.name }} / {% endif %}{{ category.name }}
+        </option>
+        {% endfor %}
+      </select>
+      <button class="inline-flex min-h-12 items-center justify-center rounded-md bg-gold px-5 font-semibold text-black transition hover:bg-goldSoft">Filter</button>
+    </form>
+
+    <div class="mt-4 flex gap-2 overflow-x-auto pb-1">
+      <a class="chip {% if not selected_metal %}chip-active{% endif %}" href="{{ url_for('products') }}">All</a>
+      <a class="chip {% if selected_metal == 'Gold' %}chip-active{% endif %}" href="{{ url_for('products', metal='Gold') }}">Gold</a>
+      <a class="chip {% if selected_metal == 'Silver' %}chip-active{% endif %}" href="{{ url_for('products', metal='Silver') }}">Silver</a>
+    </div>
+
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {% for product in products %}
+      {% include "_product_card.html" %}
+      {% else %}
+      <p class="text-white/55">No products matched your filters.</p>
+      {% endfor %}
+    </div>
+
+    {% if pagination.pages > 1 %}
+    <nav class="mt-10 flex justify-center gap-2">
+      {% for page_num in pagination.iter_pages() %}
+        {% if page_num %}
+        <a class="pagination-link {% if page_num == pagination.page %}pagination-active{% endif %}" href="{{ url_for('products', page=page_num, q=search, category=selected_category, metal=selected_metal) }}">{{ page_num }}</a>
+        {% endif %}
+      {% endfor %}
+    </nav>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

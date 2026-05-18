@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block title %}Admin Login | {{ site_name }}{% endblock %}
+{% block content %}
+<section class="flex min-h-[70vh] items-center justify-center px-4 py-10">
+  <form class="w-full max-w-md rounded-lg border border-white/10 bg-white/[0.03] p-6" method="post">
+    <h1 class="font-display text-4xl">Admin Login</h1>
+    <label class="mb-2 mt-5 block text-sm text-white/70">Username</label>
+    <input class="field" name="username" required>
+    <label class="mb-2 mt-4 block text-sm text-white/70">Password</label>
+    <input class="field" type="password" name="password" required>
+    <button class="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-md bg-gold px-5 font-semibold text-black transition hover:bg-goldSoft">Login</button>
+  </form>
+</section>
+{% endblock %}
