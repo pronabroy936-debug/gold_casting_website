@@ -93,24 +93,38 @@ select.field:-webkit-autofill {
 input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="file"]),
 textarea,
 select {
-  background: #1a1a1a;
-  color: #ffffff;
-  border: 1px solid #333333;
-  caret-color: #ffffff;
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 1px solid #333333 !important;
+  caret-color: #ffffff !important;
 }
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="file"])::placeholder,
 textarea::placeholder {
-  color: #888888;
+  color: #888888 !important;
   opacity: 1;
 }
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="file"]):focus,
 textarea:focus,
 select:focus {
-  border-color: #D4AF37;
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.4);
+  border-color: #D4AF37 !important;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.4) !important;
   outline: none;
+}
+
+/* Last-resort override for any form control created without .field */
+input,
+textarea,
+select {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+option {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
 }
 
 .chip {

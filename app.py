@@ -161,7 +161,7 @@ def seeded_defaults():
 @app.context_processor
 def inject_globals():
     return {
-        "site_name": "Aurelia Castings",
+        "site_name": "TaraMaa Castings",
         "nav_categories": top_level_categories(),
         "whatsapp_link": whatsapp_link,
         "current_year": datetime.now().year,
